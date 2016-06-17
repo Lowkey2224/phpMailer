@@ -75,9 +75,13 @@ foreach ($argv as $arg) {
             $config['from'][$rec[0]] = "";
         }
     }
-    if (startsWith2($arg, ["--verbose", "-s"])) {
+    if (startsWith2($arg, ["--verbose"])) {
         $_tmp = explode("=", $arg, 2);
-        $verbosity++;
+        $verbosity = $_tmp[1];
+    }
+    if (startsWith2($arg, ["-v"])) {
+        $verbosity+=substr_count($arg, "v");
+
     }
     if (startsWith2($arg, ["--config", "-c"])) {
         $_tmp = explode("=", $arg, 2);
