@@ -1,6 +1,7 @@
 <?php
 
 include "PHPMailerAutoload.php";
+include "config.php";
 
 $mail = new PHPMailer();
 
@@ -12,7 +13,7 @@ $mail->isSMTP();
 // 2 = client and server messages
 $mail->SMTPDebug = 2;
 //Ask for HTML-friendly debug output
-$mail->Debugoutput = 'html';
+$mail->Debugoutput = 'echo';
 //Set the hostname of the mail server
 $mail->Host = 'smtp.gmail.com';
 // use
@@ -25,9 +26,9 @@ $mail->SMTPSecure = 'tls';
 //Whether to use SMTP authentication
 $mail->SMTPAuth = true;
 //Username to use for SMTP authentication - use full email address for gmail
-$mail->Username = "marcus.jenz@gmail.com";
+$mail->Username = $mailerUsername;
 //Password to use for SMTP authentication
-$mail->Password = "$20B3rac0m12";
+$mail->Password = $mailerPassword;
 //Set who the message is to be sent from
 $mail->setFrom('loki@dieser-loki.de', 'Marcus "Loki" Jenz');
 //Set an alternative reply-to address
