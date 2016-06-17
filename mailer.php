@@ -6,6 +6,7 @@ include "config.php";
 $mail = new PHPMailer();
 
 $file = ($argc>1)?$argv[1]:null;
+$content = ($argc>2)?$argv[2]:null;
 //Tell PHPMailer to use SMTP
 $mail->isSMTP();
 //Enable SMTP debugging
@@ -38,12 +39,22 @@ $mail->setFrom('loki@dieser-loki.de', 'Marcus "Loki" Jenz');
 $mail->addAddress('loki@silpion.de', 'Loki');
 //Set the subject line
 $mail->Subject = 'PHPMailer GMail SMTP test';
-//Read an HTML message body from an external file, convert referenced images to embedded,
-//convert HTML into a basic plain-text alternative body
-//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
-//Replace the plain text body with one created manually
 $mail->Body = "Das ist ein Test";
 $mail->AltBody = 'Das ist ein Test';
+
+if($content){
+    //Read an HTML message body from an external file, convert referenced images to embedded,
+    //convert HTML into a basic plain-text alternative body
+    $pathInfo = pathinfo($content);
+    $contenfFile= $pathInfo['basename'];
+    $contenfDir= $pathInfo['dirname'];
+    echo "\n$content\n";
+
+    $mail->msgHTML(file_get_contents($content), dirname(__FILE__));
+//    $mail->msgHTML("<h1>hello World<br/></h1>Das Laeuft!<br/>", dirname(__FILE__));
+}
+//exit(0);
+//Replace the plain text body with one created manually
 //Attach an image file
 if($file){
     $mail->addAttachment($file);
