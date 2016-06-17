@@ -147,6 +147,7 @@ if ($config['content']) {
 //Replace the plain text body with one created manually
 //Attach an image file
 foreach($config['files'] as $file) {
+    echo "Attaching file $file\n";
     $mail->addAttachment($file);
 }
 
