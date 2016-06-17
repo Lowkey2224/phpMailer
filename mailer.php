@@ -13,6 +13,7 @@ $config = [
     'recipients' => [],
     'subject' => "",
     'from' => [],
+    'verbosity' => 0,
 ];
 include "config.php";
 
@@ -37,9 +38,13 @@ function startsWith2($hayStack, array $needles)
 
 
 foreach ($argv as $arg) {
-    if (startsWith2($arg, ["--attachment", "-a"])) {
+    if (startsWith2($arg, ["--help", "-h"])) {
+        printHelp();
+        exit(0);
+    }
+    if (startsWith2($arg, ["--body", "-b"])) {
         $_tmp = explode("=", $arg, 2);
-        $config['files'][] = $_tmp[1];
+        $config['content'] = $_tmp[1];
     }
     if (startsWith2($arg, ["--body", "-b"])) {
         $_tmp = explode("=", $arg, 2);
@@ -71,6 +76,15 @@ foreach ($argv as $arg) {
             $config['from'][$rec[0]] = "";
         }
     }
+    if (startsWith2($arg, ["--verbose", "-s"])) {
+        $_tmp = explode("=", $arg, 2);
+        $config['verbosity']++;
+    }
+    if (startsWith2($arg, ["--config", "-c"])) {
+        $_tmp = explode("=", $arg, 2);
+        include $_tmp[1];
+    }
+
 }
 
 //Tell PHPMailer to use SMTP
@@ -79,7 +93,7 @@ $mail->isSMTP();
 // 0 = off (for production use)
 // 1 = client messages
 // 2 = client and server messages
-$mail->SMTPDebug = 0;
+$mail->SMTPDebug = $config['verbosity'];
 //Ask for HTML-friendly debug output
 $mail->Debugoutput = 'echo';
 //Set the hostname of the mail server
@@ -140,3 +154,18 @@ if (!$mail->send()) {
     echo "Message sent!\n";
 }
 exit(0);
+
+
+function printHelp(){
+    echo"
+    usage: php mailer.php [options]
+    Options:
+    --help -h   Print this Help
+    --config -c ConfigFile in the form cof config.php.dist
+    --body -b Templatefile for the EmailBody (e.g. html File)
+    --subject -s the Subject of the Email
+    --recipient -r  -r=\"foo@example.com=>Mr Foo\"
+    --from -f -f=\"foo@example.com=>Mr Foo\"
+    --verbose -v increase verbosity
+    ";
+}
