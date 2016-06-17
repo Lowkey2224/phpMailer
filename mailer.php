@@ -41,9 +41,9 @@ foreach ($argv as $arg) {
         printHelp();
         exit(0);
     }
-    if (startsWith2($arg, ["--body", "-b"])) {
+    if (startsWith2($arg, ["--attachment", "-a"])) {
         $_tmp = explode("=", $arg, 2);
-        $config['content'] = $_tmp[1];
+        $config['files'][] = $_tmp[1];
     }
     if (startsWith2($arg, ["--body", "-b"])) {
         $_tmp = explode("=", $arg, 2);
