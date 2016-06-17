@@ -1,5 +1,11 @@
 <?php
-$mailerUsername = "foo@gmail.com";
-$mailerPassword = "yourPassword";
-
+$config = [
+    'mailerUsername' => "marcus.jenz@gmail.com",
+    'mailerPassword' => "ncenjfjemtdarcin",
+    'files' => [],
+    'content' => '',
+    'recipients' => [],
+    'from' => [],
+    'subject' => ""
+];
 ?>
