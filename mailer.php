@@ -13,10 +13,9 @@ $config = [
     'recipients' => [],
     'subject' => "",
     'from' => [],
-    'verbosity' => 0,
 ];
 include "config.php";
-
+$verbosity = 0;
 function startsWith($haystack, $needle)
 {
     // search backwards starting from haystack length characters from the end
@@ -78,7 +77,7 @@ foreach ($argv as $arg) {
     }
     if (startsWith2($arg, ["--verbose", "-s"])) {
         $_tmp = explode("=", $arg, 2);
-        $config['verbosity']++;
+        $verbosity++;
     }
     if (startsWith2($arg, ["--config", "-c"])) {
         $_tmp = explode("=", $arg, 2);
@@ -93,7 +92,7 @@ $mail->isSMTP();
 // 0 = off (for production use)
 // 1 = client messages
 // 2 = client and server messages
-$mail->SMTPDebug = $config['verbosity'];
+$mail->SMTPDebug = $verbosity;
 //Ask for HTML-friendly debug output
 $mail->Debugoutput = 'echo';
 //Set the hostname of the mail server
