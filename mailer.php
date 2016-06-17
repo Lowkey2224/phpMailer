@@ -4,9 +4,8 @@ include "PHPMailerAutoload.php";
 include "config.php";
 
 $mail = new PHPMailer();
-echo "count".$argc."\n";
-var_dump($argv);
 
+$file = ($argc>1)?$argv[1]:null;
 //Tell PHPMailer to use SMTP
 $mail->isSMTP();
 //Enable SMTP debugging
@@ -44,9 +43,12 @@ $mail->Subject = 'PHPMailer GMail SMTP test';
 //$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
 //Replace the plain text body with one created manually
 $mail->Body = "Das ist ein Test";
-$mail->AltBody = 'This is a plain-text message body';
+$mail->AltBody = 'Das ist ein Test';
 //Attach an image file
-$mail->addAttachment('LICENSE');
+if($file){
+    $mail->addAttachment($file);
+}
+
 //send the message, check for errors
 if (!$mail->send()) {
     echo "\n\n\nMailer Error: " . $mail->ErrorInfo;
