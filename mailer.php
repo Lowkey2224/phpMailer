@@ -4,6 +4,8 @@ include "PHPMailerAutoload.php";
 include "config.php";
 
 $mail = new PHPMailer();
+echo "count".$argc."\n";
+var_dump($argv);
 
 //Tell PHPMailer to use SMTP
 $mail->isSMTP();
